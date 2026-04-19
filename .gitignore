@@ -1,0 +1,51 @@
+# ----------------------
+# Node / Angular
+# ----------------------
+node_modules/
+dist/
+.angular/
+.cache/
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*
+
+# ----------------------
+# Python / Flask
+# ----------------------
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Flask instance
+instance/
+
+# ----------------------
+# OS files
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# IDE / Editor
+# ----------------------
+.vscode/
+.idea/
+
+# ----------------------
+# Docker (optional)
+# ----------------------
+*.pid
+*.seed
+*.out
+*.err

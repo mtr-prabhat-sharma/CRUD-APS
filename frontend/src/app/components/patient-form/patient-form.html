@@ -1,0 +1,96 @@
+<form [formGroup]="patientForm" (ngSubmit)="onSubmit()" class="form-container">
+
+  <div class="title">New Patient Registration</div>
+
+  <!-- Photo -->
+  <div class="form-row">
+    <label>Patient Photo</label>
+    <div class="row-inputs">
+      <input type="file" (change)="onFileChange($event)" />
+
+      @if (photoBase64) {
+        <img [src]="photoBase64" class="preview" />
+      }
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div class="form-row">
+    <label>Patient Name</label>
+    <div class="row-inputs">
+      <input type="text" placeholder="First Name" formControlName="name" />
+      <input type="text" placeholder="Last Name" />
+    </div>
+  </div>
+
+  <!-- Admission Date -->
+  <div class="form-row">
+    <label>Admission Date</label>
+    <div class="row-inputs">
+      <input type="date" formControlName="admissionDate" />
+    </div>
+  </div>
+
+  <!-- Discharge Date -->
+  <div class="form-row">
+    <label>Discharge Date</label>
+    <div class="row-inputs">
+      <input type="date" formControlName="dischargeDate" />
+    </div>
+  </div>
+
+  <!-- Gender + Age -->
+  <div class="form-row">
+    <label>Basic Info</label>
+    <div class="row-inputs">
+      <select formControlName="gender">
+        <option value="">Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+
+      <input type="number" placeholder="Age" formControlName="age" />
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div class="form-row">
+    <label>Phone</label>
+    <div class="row-inputs">
+      <input type="text" formControlName="phone" placeholder="Phone number" />
+    </div>
+  </div>
+
+  <!-- Disease -->
+  <div class="form-row">
+    <label>Patient Address</label>
+    <div class="row-inputs">
+      <input type="text" formControlName="address" placeholder="Address" />
+    </div>
+  </div>
+
+  <!-- Doctor -->
+  <div class="form-row">
+    <label>Doctor</label>
+    <div class="row-inputs">
+      <input type="text" formControlName="doctor" placeholder="Doctor name" />
+    </div>
+  </div>
+
+  <!-- Bill -->
+  <div class="form-row">
+    <label>Total Bill</label>
+    <div class="row-inputs">
+      <input type="number" formControlName="bill" placeholder="Amount" />
+    </div>
+  </div>
+
+  <!-- Button -->
+  <div class="form-row">
+    <label></label>
+    <div class="row-inputs">
+      <button type="submit">Save Patient</button>
+    </div>
+  </div>
+
+</form>
