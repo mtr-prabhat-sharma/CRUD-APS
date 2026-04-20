@@ -18,8 +18,8 @@
   <div class="form-row">
     <label>Patient Name</label>
     <div class="row-inputs">
-      <input type="text" placeholder="First Name" formControlName="name" />
-      <input type="text" placeholder="Last Name" />
+      <input type="text" placeholder="First Name" formControlName="first_name" />
+      <input type="text" placeholder="Last Name" formControlName="last_name"/>
     </div>
   </div>
 
@@ -85,7 +85,7 @@
     </div>
   </div>
 
-  <!-- Button -->
+<button type="button" (click)="fillDummy()">Fill Dummy Data</button>  <!-- Button -->
   <div class="form-row">
     <label></label>
     <div class="row-inputs">

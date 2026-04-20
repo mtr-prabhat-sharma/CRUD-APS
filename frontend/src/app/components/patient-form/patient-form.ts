@@ -17,7 +17,8 @@ export class PatientFormComponent {
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.patientForm = this.fb.group({
-      name: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
       gender: ['', Validators.required],
       phone: ['', [Validators.required, Validators.minLength(10)]],
@@ -53,4 +54,23 @@ export class PatientFormComponent {
       this.router.navigate(['/patients']);
     }, 1000);
   }
+
+
+  fillDummy() {
+  this.patientForm.patchValue({
+    first_name: 'Steve',
+    last_name: 'Doe',
+    age: 30,
+    gender: 'Male',
+    phone: '9999999999',
+    address: 'Noida Sector 1',
+    doctor: 'Dr. Sharma',
+    bill: 2000,
+    admissionDate: '2024-01-10',
+    dischargeDate: '2024-01-15'
+  });
+}
+
+
+
 }

@@ -16,7 +16,10 @@ def create_app():
 
     # Register Blueprints (routes)
     from .routes.auth_routes import auth_bp
+    from .routes.patient_routes import patient_bp
+    
     app.register_blueprint(auth_bp)
+    app.register_blueprint(patient_bp)
 
     # Optional: health check route
     @app.route('/')
