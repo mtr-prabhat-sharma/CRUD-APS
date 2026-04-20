@@ -34,7 +34,7 @@ export class LoginComponent {
 
         localStorage.setItem('isLoggedIn', 'true');
 
-        this.router.navigate(['/patients']);
+        this.router.navigate(['/add-patient']);
       },
       error: (error) => {
         this.loading = false;
