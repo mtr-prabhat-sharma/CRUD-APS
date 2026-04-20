@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-patient-form',
@@ -10,12 +11,14 @@ import { Router } from '@angular/router';
   templateUrl: './patient-form.html',
   styleUrls: ['./patient-form.scss']
 })
+
 export class PatientFormComponent {
   patientForm: FormGroup;
   successMsg = '';
   photoBase64: string = '';
+  selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
     this.patientForm = this.fb.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -42,18 +45,42 @@ export class PatientFormComponent {
   }
 
   onSubmit() {
-    if (this.patientForm.invalid) return;
-    const newPatient = this.patientForm.value;
-    const patients = JSON.parse(localStorage.getItem('patients') || '[]');
-    newPatient.id = Date.now();
-    patients.push(newPatient);
-    localStorage.setItem('patients', JSON.stringify(patients));
-    this.successMsg = 'Patient added successfully';
-    this.patientForm.reset();
-    setTimeout(() => {
-      this.router.navigate(['/patients']);
-    }, 1000);
+  if (this.patientForm.invalid) return;
+
+  const formData = new FormData();
+
+  formData.append('first_name', this.patientForm.value.first_name);
+  formData.append('last_name', this.patientForm.value.last_name);
+  formData.append('age', this.patientForm.value.age);
+  formData.append('gender', this.patientForm.value.gender);
+  formData.append('phone', this.patientForm.value.phone);
+  formData.append('address', this.patientForm.value.address);
+  formData.append('doctor', this.patientForm.value.doctor);
+  formData.append('bill', this.patientForm.value.bill);
+  formData.append('admissionDate', this.patientForm.value.admissionDate);
+  formData.append('dischargeDate', this.patientForm.value.dischargeDate);
+
+  // send image
+  if (this.selectedFile) {
+    formData.append('photo', this.selectedFile);
   }
+
+  this.http.post('http://127.0.0.1:5000/patients', formData)
+    .subscribe({
+      next: (res: any) => {
+        this.successMsg = res.message;
+        this.patientForm.reset();
+
+        setTimeout(() => {
+          this.router.navigate(['/patients']);
+        }, 1000);
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error adding patient');
+      }
+    });
+}
 
 
   fillDummy() {
