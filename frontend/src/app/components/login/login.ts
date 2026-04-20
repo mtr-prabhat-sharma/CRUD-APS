@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent {
   loading = false;
   errorMsg = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -26,20 +27,22 @@ export class LoginComponent {
     this.loading = true;
     this.errorMsg = '';
 
-    const { email, password } = this.loginForm.value;
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        alert(res.message);
 
-    // ✅ Mock login (no API)
-    if (email === 'admin@test.com' && password === '1234') {
-      setTimeout(() => {
-        this.loading = false;
+        localStorage.setItem('isLoggedIn', 'true');
+
         this.router.navigate(['/patients']);
-      }, 1000);
-    } else {
-      setTimeout(() => {
+      },
+      error: (error) => {
         this.loading = false;
-        this.errorMsg = 'Invalid credentials';
-      }, 1000);
-    }
+        this.errorMsg = error.error?.message || 'Login Failed';
+      }
+    })
+
+    
   }
 
 }
